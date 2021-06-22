@@ -22,6 +22,7 @@ class App extends React.Component {
   }
   componentDidMount = () => {
     axios.get(`${this.state.serverUrl}/books?email=abdaullah20000@gmail.com`).then(response => {
+      console.log(response.data);
         this.setState({
           data: response.data,
         })
@@ -35,7 +36,7 @@ class App extends React.Component {
   
   render() {
     const { isAuthenticated } = this.props.auth0;
-    console.log("app", this.props);
+    // console.log("app", this.props);
 
     
     return (
@@ -45,11 +46,9 @@ class App extends React.Component {
             <Header />
             <Switch>
               <Route exact path="/">
-                {/* TODO: if the user is logged in, render the `MyFavoriteBooks` component, if they are not, render the `Login` component */}
                 {isAuthenticated ? <MyFavoriteBooks data={this.state.data}/> : <Login />}
                 
               </Route>
-              {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
               <Route path="/profile">
                 <Profile />
               </Route>
