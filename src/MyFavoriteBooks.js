@@ -19,50 +19,46 @@ class MyFavoriteBooks extends React.Component {
         bookDescription: '',
         bookState: '',
         showUpdateForm: false,
-        catNameUpdate: '',
-        catIndex: 0
+       bookNameUpdate: '',
+       bookIndex: 0
     }
 }
+
 updateBookName = (bookName) => this.setState({ bookName });
 updateBookDescription = (bookDescription) => this.setState({ bookDescription });
 updateBookState = (bookState) => this.setState({ bookState });
 
-createMyBook = (e) => {
-  e.preventDefault()
+  createMyBook = (e) => {
+    e.preventDefault()
 
-  const reqBody = {
-    userEmail: 'abdaullah20000@gmail.com',
-    bookName: this.state.bookName,
-    bookDescription:this.state.bookDescription,
-    bookState:this.state.bookState
+    const reqBody = {
+      userEmail: 'abdaullah20000@gmail.com',
+      bookName: this.state.bookName,
+      bookDescription:this.state.bookDescription,
+      bookState:this.state.bookState
+    }
+    // to send a request for creating new data, we will be using the POST method
+    axios.post(`${this.state.serverUrl}/book`, reqBody).then(response => {
+        this.setState({
+            bookData: response.data
+        })
+    }).catch(error =>
+        alert(error.message)
+    )
+
   }
-  // to send a request for creating new data, we will be using the POST method
-  axios.post(`${this.state.serverUrl}/book`, reqBody).then(response => {
-      this.setState({
-          bookData: response.data
-      })
-  }).catch(error =>
-      alert('xxxxxxxxx')
-  )
+  deleteMyBook = (index) => {
 
-}
-// 0000000000000000000000000
-
-// 00000000000000000000000
-//   deleteMyCat = (index) => {
-//     // This function will be sending an axios request to the backend with the cat index to be deleted
-//     // NOTE! when deleting items with axios, axios does not accept request body assignment
-
-//     axios.delete(`${this.state.serverUrl}/cat/${index}?email=${this.state.userEmail}`).then(response => {
-//         this.setState({
-//             catsData: response.data.cats,
-//             showUpdateForm: false
-//         });
-//     }).catch(error =>
-//         alert(error.message)
-//     )
-// }
-
+    axios.delete(`${this.state.serverUrl}/book/${index}?email=abdaullah20000@gmail.com`).then(response => {
+      console.log(response.data);
+        this.setState({
+          bookData: response.data,
+            showUpdateForm: false
+        });
+    }).catch(error =>
+        alert(error.message)
+    )
+  }
 
 
 
@@ -76,7 +72,7 @@ createMyBook = (e) => {
       createMyBook={this.createMyBook}
       />
       {
-        this.props.data.length > 0 && <BestBooks data={this.state.bookData} />
+        this.props.data.length > 0 && <BestBooks data={this.state.bookData} deleteMyBook={this.deleteMyBook} />
       }
      </div>
     )

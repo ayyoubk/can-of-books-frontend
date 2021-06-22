@@ -22,6 +22,7 @@ class App extends React.Component {
   }
   componentDidMount = () => {
     axios.get(`${this.state.serverUrl}/books?email=abdaullah20000@gmail.com`).then(response => {
+      console.log(response.data);
         this.setState({
           data: response.data,
         })
@@ -35,7 +36,7 @@ class App extends React.Component {
   
   render() {
     const { isAuthenticated } = this.props.auth0;
-    console.log("app", this.props);
+    // console.log("app", this.props);
 
     
     return (

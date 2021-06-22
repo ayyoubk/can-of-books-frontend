@@ -4,10 +4,15 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'
 export class BestBooks extends Component {
   render() {
+    console.log(this.props.data);
+    let arr=this.props.data[0];
+    if (!arr){
+      arr=this.props.data;
+    }
     return (
-
+      
       <div>
-        {this.props.data[0].books.map((item,idx)=> {
+        {arr.books.map((item,idx)=> {
           return (
             <Card className="text-center" key={idx}>
               <Card.Body>
@@ -15,7 +20,7 @@ export class BestBooks extends Component {
                       <Card.Text>
                       {item.description}
                       </Card.Text>
-                      <Button variant="primary"  onClick={()=>this.props.deletebook(idx)}>Delete</Button>
+                      <Button variant="primary"  onClick={()=>this.props.deleteMyBook(idx)}>Delete</Button>
                     </Card.Body>
                     <Card.Footer className="text-muted">{item.state}</Card.Footer>
             </Card>
