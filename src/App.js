@@ -1,14 +1,14 @@
 import React from "react";
+import { withAuth0 } from '@auth0/auth0-react';
 import Header from "./Header";
 // import IsLoadingAndError from "./IsLoadingAndError";
 import Footer from "./Footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from './Login';
 import MyFavoriteBooks from './MyFavoriteBooks';
-import { withAuth0 } from '@auth0/auth0-react';
-import Profile from './components/Profile';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Profile from './components/Profile';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 class App extends React.Component {
@@ -20,16 +20,16 @@ class App extends React.Component {
       data: [],
     }
   }
-  componentDidMount = () => {
-    axios.get(`${this.state.serverUrl}/books?email=abdaullah20000@gmail.com`).then(response => {
-      console.log(response.data);
+  componentDidMount =async () => {
+    await axios.get(`${this.state.serverUrl}/books?email=abdaullah20000@gmail.com`).then(response => {
+      // console.log(response.data[0]);
         this.setState({
           data: response.data,
         })
-        // console.log(response.data);
+        console.log(response.data);
     }).catch(
         error => {
-            alert(error.message);
+            console.log(error.message, this.state.data);
         }
     );
 } 
